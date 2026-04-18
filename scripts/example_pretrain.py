@@ -10,7 +10,7 @@ if __name__ == "__main__":
         eval_pow2=True,
         max_eval_steps=40,
         load_ckpt_path=None,
-        save_ckpt_dir="ckpts/leave_rel-amazon",
+        save_ckpt_dir="ckpts/pretrain_stack",
         compile_=True,
         seed=0,
         # data
