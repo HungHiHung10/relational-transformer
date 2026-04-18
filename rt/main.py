@@ -85,7 +85,8 @@ def main(
     wd,
     lr_schedule,
     max_grad_norm,
-    max_steps,
+    # max_steps,
+    epochs,
     # model
     embedding_model,
     d_text,
@@ -193,6 +194,8 @@ def main(
         eps=1e-8,
         fused=True,
     )
+
+    max_steps = epochs * len(loader)
 
     if lr_schedule:
         lrs = optim.lr_scheduler.OneCycleLR(
