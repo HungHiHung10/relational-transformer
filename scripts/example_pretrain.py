@@ -14,10 +14,13 @@ if __name__ == "__main__":
         compile_=True,
         seed=0,
         # data
-        train_tasks=[t for t in all_tasks if t[0] != "rel-amazon"],
-        eval_tasks=[t for t in forecast_tasks if t[0] == "rel-amazon"],
+        # train_tasks=[t for t in all_tasks if t[0] != "rel-amazon"],
+        # eval_tasks=[t for t in forecast_tasks if t[0] == "rel-amazon"],
+        train_tasks=[t for t in all_tasks if t[0] == "rel-stack"],
+        eval_tasks=[t for t in forecast_tasks if t[0] == "rel-stack"],
         batch_size=32,
-        num_workers=8,
+        # num_workers=8,
+        num_workers=2,
         max_bfs_width=256,
         # optimization
         lr=1e-3,
