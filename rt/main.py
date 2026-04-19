@@ -347,19 +347,51 @@ def main(
 
         return metrics
 
+    # def checkpoint(best=False, db_name="", table_name=""):
+    #     if rank != 0:
+    #         return
+    #     save_ckpt_dir_ = Path(save_ckpt_dir).expanduser()
+    #     save_ckpt_dir_.mkdir(parents=True, exist_ok=True)
+    #     if best:
+    #         save_ckpt_path = f"{save_ckpt_dir_}/{db_name}_{table_name}_best.pt"
+    #     else:
+    #         save_ckpt_path = f"{save_ckpt_dir_}/{steps=}.pt"
+
+    #     state_dict = net.module.state_dict() if ddp else net.state_dict()
+    #     torch.save(state_dict, save_ckpt_path)
+    #     print(f"saved checkpoint to {save_ckpt_path}")
+
     def checkpoint(best=False, db_name="", table_name=""):
         if rank != 0:
             return
-        save_ckpt_dir_ = Path(save_ckpt_dir).expanduser()
+            
+        # Lấy tên run hiện tại của wandb (ví dụ: dainty-pond-10)
+        run_name = wandb.run.name if wandb.run is not None else "unknown_run"
+        
+        # Khởi tạo đường dẫn thư mục Google Drive theo yêu cầu
+        drive_base_path = "/content/drive/MyDrive/RelationalTransformer/pretrain"
+        save_ckpt_dir_ = Path(drive_base_path) / run_name
+        
+        # Tạo thư mục nếu chưa tồn tại
         save_ckpt_dir_.mkdir(parents=True, exist_ok=True)
+        
+        # Xác định tên file
         if best:
             save_ckpt_path = f"{save_ckpt_dir_}/{db_name}_{table_name}_best.pt"
         else:
-            save_ckpt_path = f"{save_ckpt_dir_}/{steps=}.pt"
+            save_ckpt_path = f"{save_ckpt_dir_}/step_{steps}.pt"
 
+        # Lấy state dict của mô hình
         state_dict = net.module.state_dict() if ddp else net.state_dict()
+        
+        # 1. Lưu checkpoint xuống Google Drive
         torch.save(state_dict, save_ckpt_path)
-        print(f"saved checkpoint to {save_ckpt_path}")
+        print(f"Saved Google Drive at: {save_ckpt_path}")
+        
+        # 2. Đồng bộ checkpoint lên WandB
+        # Hàm wandb.save sẽ upload file vật lý này lên cloud của WandB
+        wandb.save(save_ckpt_path, base_path=str(save_ckpt_dir_))
+        print(f"Synchronized to WandB")
 
     pbar = tqdm(
         total=max_steps,
