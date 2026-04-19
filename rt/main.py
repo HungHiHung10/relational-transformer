@@ -255,7 +255,8 @@ def main(
                         else len(eval_loader)
                     ),
                     desc=f"{db_name}/{table_name}/{split}",
-                    disable=rank != 0,
+                    # disable=rank != 0,
+                    disable=True
                 )
 
                 batch_idx = 0
