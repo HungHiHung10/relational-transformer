@@ -28,7 +28,7 @@ if __name__ == "__main__":
         lr_schedule=True,
         max_grad_norm=1.0,
         # max_steps=50_001,
-        epochs=10,
+        epochs=1,
         # model
         embedding_model="all-MiniLM-L12-v2",
         d_text=384,
