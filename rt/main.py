@@ -85,8 +85,8 @@ def main(
     wd,
     lr_schedule,
     max_grad_norm,
-    # max_steps,
-    epochs,
+    max_steps=None,
+    epochs=None,
     # model
     embedding_model,
     d_text,
@@ -195,7 +195,22 @@ def main(
         fused=True,
     )
 
-    max_steps = epochs * len(loader)
+    # max_steps = epochs * len(loader)
+    if epochs is not None:
+        max_steps = int(epochs * len(loader))
+    elif max_steps is not None:
+        max_steps = int(max_steps)
+    else:
+        raise ValueError("[ERROR] Pls pass by `epochs` or `max_steps`!")
+
+    if lr_schedule:
+        lrs = optim.lr_scheduler.OneCycleLR(
+            opt,
+            max_lr=lr,
+            total_steps=max_steps, 
+            pct_start=0.2,
+            anneal_strategy="linear",
+        )
 
     if lr_schedule:
         lrs = optim.lr_scheduler.OneCycleLR(
