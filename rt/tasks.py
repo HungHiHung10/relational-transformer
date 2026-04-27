@@ -26,7 +26,7 @@ forecast_reg_tasks = [
     ("rel-f1", "driver-position", "position", []),
     ("rel-avito", "ad-ctr", "num_click", []),
 ]
-
+   
 autocomplete_clf_tasks = [
     ("rel-avito", "SearchInfo", "IsUserLoggedOn", []),
     ("rel-stack", "postLinks", "LinkTypeId", []),
@@ -100,7 +100,7 @@ all_dbs = [
     "rel-amazon",
     "rel-hm",
     "rel-stack",
-    "rel-avito",
+    "rel-avito",    
     "rel-event",
     "rel-trial",
     "rel-f1",

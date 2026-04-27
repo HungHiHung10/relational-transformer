@@ -85,8 +85,6 @@ def main(
     wd,
     lr_schedule,
     max_grad_norm,
-    max_steps=None,
-    epochs=None,
     # model
     embedding_model,
     d_text,
@@ -95,7 +93,18 @@ def main(
     d_model,
     num_heads,
     d_ff,
+    max_steps=None,
+    epochs=None,
 ):
+    args = locals().copy() 
+    
+    print("\n" + "_"*30)
+    print("Configured Arguments")
+    print("_"*30)
+    for key, value in args.items():
+        print(f"{key:20}: {value}")
+    print("_"*30 + "\n")    
+    
     seed_everything(seed)
 
     ddp = "LOCAL_RANK" in os.environ
