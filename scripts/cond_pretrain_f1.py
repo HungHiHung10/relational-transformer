@@ -11,7 +11,8 @@ if __name__ == "__main__":
         max_eval_steps=40,
         load_ckpt_path="ckpts/leave_rel-amazon/rel-amazon_user-churn_best.pt",
         save_ckpt_dir="ckpts/contd_rel-amazon_user-churn/",
-        compile_=True,
+        # compile_=True,
+        compile_=False,
         seed=0,
         # data
         train_tasks=[
